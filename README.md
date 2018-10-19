@@ -1,2 +1,2 @@
 # pysodist
-a python implementation of isodist
+a python-based implementation of isodist
