@@ -1,0 +1,4 @@
+pep_mod_seq charge retention_time spectra_file protein[optional]
+SWTLVR 1 21.004 peaks/S17_0_761.43099_21.004.txt S17
+AILAAAGIAEDVK 1 24.605 peaks/S13_0_1241.71052_24.605.txt S13
+QHVPVFVTDEMVGHK 4 22.027 peaks/S19_0_431.4718063_22.027.txt S19
