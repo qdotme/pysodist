@@ -2,6 +2,8 @@ import dists_and_params
 import xmltodict
 import numpy
 import matplotlib.pyplot as plt
+from scipy.interpolate import interp1d
+import pandas
 
 class MainInfoParser(): #parses the .in file to hold relevant variables
     def __init__(self,infile):
@@ -134,6 +136,7 @@ class ResInfoParser():
                 break
             
             res_header=newline.split()
+            print(res_header)
             sym=res_header[0]
             res_type=res_header[1] #default, fixed, or variable            
             
@@ -244,29 +247,19 @@ class PeakInfoParser(): #parses the .batch file
         
     def get_peak_data(self,peak_idx):
         datfile=self.datfiles[peak_idx]
-        charge=self.charges[peak_idx]
-        intensity=dists_and_params.new_mz_0_array()
-        m_hd=None
-        
-        f=open(datfile,'r')
-        for line in f.readlines():
-            point_data=list(map(float,line.split()))   
-            if m_hd is None:
-                m_hd=point_data[0]*charge    
-                               
-            intensity[int((point_data[0]*charge-m_hd)*dists_and_params.scale_mz)]+=point_data[1]*charge
+        #charge=self.charges[peak_idx]
+        dataframe = pandas.read_csv(datfile, sep='\t', header=None)
+        mz_array = dataframe.iloc[:,0]
+        int_array = dataframe.iloc[:,1]
 
-            ###JOEY "FIXED" THIS AS FOLLOWS:
-            #start_mz = mz_array[0]
-            #end_mz = mz_array[mz_array.shape[0]-1]
-            #mz_range = end_mz-start_mz
+        start_mz = mz_array[0]
+        end_mz = mz_array[mz_array.shape[0]-1]
+        mz_range = end_mz-start_mz
 
-            #interp_func = interp1d(mz_array, int_array)
-            #intensity=interp_func(numpy.arange(start_mz, end_mz,(mz_range)/dists_and_params.np))
+        interp_func = interp1d(mz_array, int_array)
+        intensity=interp_func(numpy.arange(start_mz, end_mz,(mz_range)/dists_and_params.np))
 
-        f.close()
-        
-        return numpy.array(intensity)
+        return intensity
     
     def get_peptide_seq(self,peak_idx):
         return self.peptide_list[peak_idx].split('Z')[0]

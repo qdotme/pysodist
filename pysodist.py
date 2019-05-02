@@ -1,5 +1,6 @@
+
 import dists_and_params
-import parsers
+import parsers #parsers_v2 as parsers
 import sys
 import scipy.optimize as optimize
 import time
@@ -32,6 +33,7 @@ def eval_param_vector(param_vec,spectrum,peak_data):
     #calc_spec*=max(peak_data)/max(calc_spec)
     return calc_spec-peak_data
 
+
 if __name__ == "__main__":
     #Write out Liscence Information
     print("""\npysodist Copyright (C) 2018
@@ -53,7 +55,15 @@ if __name__ == "__main__":
     except IndexError:
         print("Info file missing. Please provide a .in file simliar to the example xml_inputs.xml")
         print("Using default file of './xml_inputs.xml'")
-        input_file='./xml_inputs.xml'
+        #input_file= './C13_xml_inputs.xml' #'./working_xml_inputs.xml'#'./model_var0.5N15_fix0.993N15_xml_inputs.xml' #'./15N_pulse_xml_inputs.xml'
+        #This input fails to fit all three isotope envelopes
+        #input_file= './model_var0.5N15_fix0.993N15_xml_inputs.xml'
+
+        #This input properly fits two isotope envelopes
+        #input_file= './working_xml_inputs.xml'
+
+        #This input fails to fit 2 c13 isotope envelopes
+        input_file= './C13_xml_inputs.xml' #'./working_xml_inputs.xml'#'./model_var0.5N15_fix0.993N15_xml_inputs.xml' #'./15N_pulse_xml_inputs.xml'
     print("Input file : " + input_file)
     print("++++++++++++++++++++++++++++++++")
 
@@ -70,7 +80,7 @@ if __name__ == "__main__":
         DISPLAY_RESULTS = sys.argv[3]
     except IndexError:
         print("No fits or spectra will be displayed. To see spectra and fits, pass 'True' as argument 3.")
-        DISPLAY_RESULTS = False
+        DISPLAY_RESULTS = True
     
     try:
         fit_directory = sys.argv[4]
@@ -141,7 +151,6 @@ if __name__ == "__main__":
         spectrum.build_as_dist_sum_with_mults([stick_spectrum,gaussian,shift],[1,1,1])
         
         #do fitting
-
         t1 = time.time()
         optimize.leastsq(lambda param_vec: eval_param_vector(param_vec,spectrum,peak_data),
                         extract_param_vector(),maxfev=500)
