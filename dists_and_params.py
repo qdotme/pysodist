@@ -2,9 +2,10 @@ import numpy
 import math
 import matplotlib.pyplot as plt
 
+#np=65536
 np=65536
 ncp=np//2+1
-scale_mz=1000
+scale_mz=100
 
 fft=lambda x:numpy.fft.rfft(x)
 ifft=lambda x:numpy.fft.irfft(x)
