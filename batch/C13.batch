@@ -1,1 +1,2 @@
-
+pep_mod_seq charge retention_time spectra_file protein[optional]
+AVVNMISFNPIAPR 3 10 ./peaks/C13_AVVNMISFNPIAPR+3.tsv Protein
