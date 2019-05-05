@@ -1,0 +1,21 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<pysodist_settings>
+<fit_settings>
+	<niter>5</niter>	<!--# of iterations for each round of least squares-->
+	<sigma>100.0</sigma>	<!--std deviation of noise - read but not used-->
+	<baseline_offset>1.0</baseline_offset>		<!--initial guess for baseline (Default = 1.0)-->
+	<baseline_mode>auto</baseline_mode>	<!--mode to calculate baselines -->
+	<mass_offset>0.01</mass_offset>		<!--initial guess for offset (Default = 0.01)-->
+	<mass_offset_mode>variable</mass_offset_mode>	<!--can be set to "fixed" to disallow mass offsets-->
+	<gaussian_width>0.003</gaussian_width>		<!--initial guess for guassian width (Default = 0.003)-->
+	<gaussian_width_mode>variable</gaussian_width_mode>	<!--can be set to "fixed" to disallow gaussian width adjustments on a per-peptide basis--> 
+</fit_settings>
+<program_settings>
+	<mode>fitit</mode> 	<!--options are fitit and tryit-->
+</program_settings>
+<input_files>
+	<batch>./batch/15Npulse.bench.batch</batch>	<!--batch file to run (list of all peptides)-->
+	<atom>atom_defs.txt</atom>	<!--atom definition file-->
+	<res>./models/res15Npulse.txt</res>	<!--residue definition file-->
+</input_files>
+</pysodist_settings>
