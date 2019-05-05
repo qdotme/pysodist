@@ -12,7 +12,9 @@ ifft=lambda x:numpy.fft.irfft(x)
 
 mz_axis=list(map(lambda i:i/scale_mz,range(0,np)))
 mu_axis=list(map(lambda i:i/np,range(0,ncp)))
-     
+
+numpy_mu_axis = numpy.linspace(0,0.5,ncp) 
+
 new_mz_0_array=lambda: numpy.zeros(np,dtype=float)
 new_mu_0_array=lambda: numpy.zeros(ncp,dtype=complex)
 new_mu_1_array=lambda: numpy.ones(ncp,dtype=complex)
@@ -88,11 +90,11 @@ class Distribution(object):
             ft=[]
             _2s = 2*self.gw**2 
             _2a = 2**.5*math.pi*self.gw 
-            self.fourier_rep=numpy.array([math.e**((-mu**2)/_2s)/_2a for mu in mu_axis])
+            self.fourier_rep=numpy.exp(-(numpy_mu_axis**2)/_2s) / _2a 
         elif self.mode=='shift':
             ft=[]
             _jps = (1j)*2*math.pi*(-self.m_off+self.m_hd)*scale_mz 
-            self.fourier_rep=numpy.array([math.e**(_jps*mu) for mu in mu_axis])
+            self.fourier_rep=numpy.exp(numpy_mu_axis * _jps) 
         elif self.mode=='vals_and_freqs':
             pre_ft=new_mz_0_array()
             for i,val in enumerate(self.values):
