@@ -86,8 +86,10 @@ class Distribution(object):
     def ft_internal(self):
         if self.mode=='gaussian':
             ft=[]
+            _2s = 2*self.gw**2 
+            _2a = 2**.5*math.pi*self.gw 
             for mu in mu_axis:
-                ft.append(math.e**((-mu**2)/(2*self.gw**2))/(2**.5*math.pi*self.gw))
+                ft.append(math.e**((-mu**2)/_2s)/_2a)
             self.fourier_rep=numpy.array(ft)
         elif self.mode=='shift':
             ft=[]
