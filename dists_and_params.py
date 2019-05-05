@@ -88,14 +88,11 @@ class Distribution(object):
             ft=[]
             _2s = 2*self.gw**2 
             _2a = 2**.5*math.pi*self.gw 
-            for mu in mu_axis:
-                ft.append(math.e**((-mu**2)/_2s)/_2a)
-            self.fourier_rep=numpy.array(ft)
+            self.fourier_rep=numpy.array([math.e**((-mu**2)/_2s)/_2a for mu in mu_axis])
         elif self.mode=='shift':
             ft=[]
-            for mu in mu_axis:
-                ft.append(math.e**((1j)*2*math.pi*mu*(-self.m_off+self.m_hd)*scale_mz))
-            self.fourier_rep=numpy.array(ft)
+            _jps = (1j)*2*math.pi*(-self.m_off+self.m_hd)*scale_mz 
+            self.fourier_rep=numpy.array([math.e**(_jps*mu) for mu in mu_axis])
         elif self.mode=='vals_and_freqs':
             pre_ft=new_mz_0_array()
             for i,val in enumerate(self.values):
