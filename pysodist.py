@@ -1,4 +1,4 @@
-
+#!/usr/bin/python3 
 import dists_and_params
 import parsers #parsers_v2 as parsers
 import sys
@@ -168,7 +168,7 @@ if __name__ == "__main__":
         print_param_labels()
         print(param_vector)
         
-        if DISPLAY_RESULTS:
+        if False: # DISPLAY_RESULTS:
             PeakInfo.display_spectra(i)
             spectrum.display_fit()
 
